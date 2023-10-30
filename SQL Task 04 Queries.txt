@@ -1,0 +1,34 @@
+## Drill down region to product level
+
+select region,product_id,SUM(sales_amount) as total_Sales
+from sales_sample
+Group by region,product_id
+order by region,product_id;
+
+--roll up product to region level
+
+select region, SUM(sales_amount) as total_sales
+from sales_sample
+Group by region
+order by region;
+
+-- Cube
+
+Select product_id,region, date,sum(sales_amount) as total_sales
+from sales_sample
+group by product_id,region,date
+order by product_id,region,date;
+
+--slice the date to view sales for particular region or date range
+
+select region,date,sum(sales_amount) as total_sales
+from sales_Sample
+where region ='North' and date between '2023-10-05' and '2023-11-20'
+group by region, date
+order by date;
+
+--Query to view sales for specific combination of products
+
+select product_id, region,date,sales_amount 
+from sales_sample
+where product_id=6 and region='South' and date ='2023-10-20';

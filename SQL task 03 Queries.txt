@@ -1,0 +1,62 @@
+## Inserting values into events_table
+
+insert into events_table values (001,'Yuvan','2023-11-12','Bangalore','Come Experience Yuvan Magival Concert'),
+(002,'ARR','2023-11-12','Bangalore','Isai puyal rahman in isai'),
+(003,'GVM','2023-10-15','Coimbatore','stylish uh oru video kacheri'),
+(004,'GV Prakash','2023-11-03','Madurai','nachunnu naalu pattu'),
+(005,'VJ Antony','2023-12-30','Trichy','thara local kuthu paatu');
+
+## Inserting values into attendees_table
+
+insert into "Attendees" values (001,'Rahman','8973772165','rahuman@amazon.com','Bombay'),
+(002,'yuvan','9876543211','yuvan@amazon.com','Delhi'),
+(003,'vasudevan','9600652234','vasu@amazon.com','Ladakh'),
+(004,'Prakash','9988776655','prakash@amazon.com','Madurai'),
+(005,'Antony','8899007766','antony@amazon.com','leh');
+
+## Inserting values into Registration_table
+
+insert into registration_table values (001,001,001,'2023-10-29','5000'),
+(002,002,002,'2023-10-30','15000'),
+(003,003,003,'2023-11-05','7000'),
+(004,004,004,'2023-11-15','9000'),
+(005,005,005,'2023-12-06','14000');
+
+## Inserting a new event
+
+insert into events_table(Event_id,Event_name,Event_date,Event_location,Event_description) values 
+('006','saravana','2023-11-12','kodaikanal','Pure Vibe');
+
+## Update existing event
+
+Update events_table set event_name='GVP' where Event_id='4';
+
+## Delete existing event
+
+delete from events_table where Event_id='6';
+
+##Query to insert new attendees
+
+insert into attendees_table (Attendee_id,Attendee_name,Attendee_phone,Attendee_email,Attendee_city) values 
+(006,'kanimo','687945321','kanimo@amazon.com','neyveli');
+
+##Register attendee for an event
+
+insert into registration_table (Registration_id,Event_id,Attendee_id,Registration_date,Registration_amount) values 
+(006,005,006,'2023-12-05','40000');
+
+## Query to retrieve event information
+
+Select * from events_table;
+
+## Query to generate attendee lists
+
+Select attendee_name from attendees_table;
+
+## Query to calculate event attendance statistics
+
+SELECT events_table.event_id, events_table.event_name, COUNT(registration_table.registration_id) AS total_attendees
+FROM events_table
+LEFT JOIN registration_table ON events_table.event_id = registration_table.event_id
+GROUP BY events_table.event_id, events_table.event_name
+ORDER BY total_attendees;

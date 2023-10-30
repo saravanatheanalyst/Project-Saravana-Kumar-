@@ -1,0 +1,119 @@
+
+##Create a table named Student_table
+
+create table Student_Table(
+student_ID int, 
+primary key(student_ID),
+Stu_name text, 
+Department text, 
+Email_ID text, 
+Phone_no numeric, 
+Address text, 
+Date_of_birth date, 
+Gender text,
+Major text,
+GPA numeric,
+Grade text);
+
+##Insert values into created tables
+
+Insert into student_table values 
+(001,'saravana','CSE','vzsar@amazon.com',8973772165,'Bangalore', '06-07-1994','M','CS',8.2,'A'),
+(002,'Kumar','CSE','kumar@amazon.com',9873772165,'Chennai', '07-06-1994','M','Maths',8.2,'B'),
+(003,'Ravi','ECE','ravi@amazon.com',6773882165,'Chennai', '07-06-1994','M','Maths',8.2,'C'),
+(004,'Raj','EEE','raj@amazon.com',9073723165,'Chennai', '07-06-1994','M','Maths',8.2,'E'),
+(005,'Siva','MECH','siva@amazon.com',6773778165,'Chennai', '07-06-1994','M','Maths',8.2,'D'),
+(006,'Manoj','ECE','manoj@amazon.com',8873232165,'Chennai', '07-06-1994','M','Maths',8.2,'D'),
+(007,'Anbu','IT','anbu@amazon.com',9973777865,'Chennai', '07-06-1994','M','Maths',8.2,'B'),
+(008,'Jayanthi','IT','jayanthi@amazon.com',9073723165,'Chennai', '07-06-1994','M','Maths',8.2,'C'),
+(009,'Anwesha','CIVIL','anwesha@amazon.com',9823772165,'Chennai', '07-06-1994','M','Maths',8.2,'A'),
+(010,'Aisha','CIVIL','aisha@amazon.com',9973782165,'Chennai', '07-06-1994','M','Maths',8.2,'E');
+
+## Query to retrieve student information and sort based on descending grade
+
+select * from student_table
+order by Grade DESC;
+
+## Query to retrieve male students
+
+Select * from student_table
+where gender='M';
+
+## Query to retrieve students with GPA less than 5.0
+
+select * from student_table
+where gpa<5.0;
+
+## Query to update student email and grade
+
+update student_table set email_id='raju@amazon.com',grade='E' where stu_name='Raj';
+
+## Query to retrieve name and age of all students who have grade 'B'
+
+Select stu_name, Age(now(),date_of_birth)as age from student_table where grade='B';
+
+## Grouping and Calculation
+
+Select department,gender,AVG(gpa) as average_gpa from student_table
+group by department,gender;
+
+## Table Renaming
+
+Alter table student_table rename to student_info;
+
+## Retrieving max gpa
+
+select stu_name from student_info where gpa=(select max(gpa)from student_info);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Insert into student_table values 
+(001,'saravana','CSE','vzsar@amazon.com',8973772165,'Bangalore', '06-07-1994','M','CS',8.2,'A'),
+(002,'Kumar','CSE','kumar@amazon.com',9873772165,'Chennai', '07-06-1994','M','Maths',8.2,'B'),
+(003,'Ravi','ECE','ravi@amazon.com',6773882165,'Chennai', '07-06-1994','M','Maths',8.2,'C'),
+(004,'Raj','EEE','raj@amazon.com',9073723165,'Chennai', '07-06-1994','M','Maths',8.2,'E'),
+(005,'Siva','MECH','siva@amazon.com',6773778165,'Chennai', '07-06-1994','M','Maths',8.2,'D'),
+(006,'Manoj','ECE','manoj@amazon.com',8873232165,'Chennai', '07-06-1994','M','Maths',8.2,'D'),
+(007,'Anbu','IT','anbu@amazon.com',9973777865,'Chennai', '07-06-1994','M','Maths',8.2,'B'),
+(008,'Jayanthi','IT','jayanthi@amazon.com',9073723165,'Chennai', '07-06-1994','M','Maths',8.2,'C'),
+(009,'Anwesha','CIVIL','anwesha@amazon.com',9823772165,'Chennai', '07-06-1994','M','Maths',8.2,'A'),
+(010,'Aisha','CIVIL','aisha@amazon.com',9973782165,'Chennai', '07-06-1994','M','Maths',8.2,'E');
+select * from student_table;
+
+

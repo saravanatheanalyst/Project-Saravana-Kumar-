@@ -1,0 +1,113 @@
+Create table StudentInfo (
+    STU_ID int NOT NULL,
+    STU_NAME varchar(20),
+    DOB varchar(20),
+    PHONE_NO int, 
+    EMAIL_ID varchar(20),
+    ADDRESS varchar(20),
+    PRIMARY KEY (STU_ID)
+);
+
+Create table CourseInfo (
+    COURSE_ID int,
+    COURSE_NAME varchar(20),
+    COURSE_INSTRUCTOR_NAME varchar(20)
+);
+
+Create table EnrollmentInfo (
+    ENROLLMENT_ID int,
+        STUDENT_ID int,
+    COURSE_ID int,
+    ENROLLMENT_STATUS varchar(20),
+        FOREIGN KEY (COURSE_ID) REFERENCES StudentInfo (STU_ID)
+);
+
+--inserting value into StudentInfo table
+
+Insert into StudentInfo (STU_ID, STU_NAME, DOB, PHONE_NO, EMAIL_ID, ADDRESS) values (01, 'Saravana', '06/07/1994', 8973772165, 'vzsar@amazon.com', 'Bangalore'), (02, 'Siva', '22/05/1997', 7639453617, 'shiv@amazon.com', 'Chennai'), (03, 'kumar', '07/06/1995', 8973562165, 'kumar@amazon.com', 'Hyderabad'), (04, 'Ravi', '16/07/1999', 9873772165, 'ravi@amazon.com', 'Bangalore'), (05, 'Razu', '14/03/1994', 9073772165, 'razu@amazon.com', 'Neyveli');
+
+--inserting value into CourseInfo table
+
+Insert into CourseInfo (COURSE_ID, COURSE_NAME, COURSE_INSTRUCTOR_NAME) values (01,'SQL', 'Suresh'), (02,'PHP', 'Suresh'), (03,'HTML', 'Ganesh'), (04,'Python', 'Govalu'), (05,'FORTRAN', 'Thalapathy');
+
+--inserting value into EnrollmentInfo table
+
+Insert into EnrollmentInfo (ENROLLMENT_ID, STUDENT_ID, COURSE_ID, ENROLLMENT_STATUS) values (01,03,01,'Enrolled'), (02,03,01,'Enrolled'), (03,03,01,'Enrolled'), (04,04,04,'Not Enrolled'), (05,05,05,'Enrolled');
+
+--Display all records from StudentInfo
+
+--Select * from StudentInfo;
+
+--Display all records from CourseInfo
+
+--Select * from CourseInfo;
+
+--Display all records from EnrollmentInfo
+
+--Select * from EnrollmentInfo;
+
+--1) Query to Display name, contact information & Enrollment status
+
+Select StudentInfo.STU_NAME, StudentInfo.PHONE_NO, EnrollmentInfo.ENROLLMENT_STATUS
+
+       from StudentInfo 
+
+           Left JOIN EnrollmentInfo on StudentInfo.STU_ID = EnrollmentInfo.COURSE_ID;
+
+--2) Query to retrieve list of courses in which specific student enrolled
+
+Select StudentInfo.STU_NAME, CourseInfo.COURSE_NAME
+
+     from StudentInfo
+
+         LEFT JOIN CourseInfo on StudentInfo.STU_ID = CourseInfo.COURSE_ID;
+
+--3) Query to retrieve course information including course name and instructor information
+
+Select COURSE_NAME, COURSE_INSTRUCTOR_NAME from CourseInfo;
+
+--4) Query to retrieve course information of specific course
+
+Select * from CourseInfo where COURSE_NAME = 'SQL';
+
+--5) Query to retrieve course information for multiple course
+
+Select * from CourseInfo;
+
+--6) Executed all the queries listed above. Please find the output in the right pane.
+
+--Query to retrieve number of student enrolled in each course
+
+Select COURSE_NAME, count(*) AS Numbers
+    from CourseInfo
+    Group By COURSE_NAME;
+
+--Query to retrieve list of students enrolled in specific course
+
+Select StudentInfo.STU_NAME
+from StudentInfo
+Inner Join EnrollmentInfo on StudentInfo.STU_ID = EnrollmentInfo.COURSE_ID
+Inner Join CourseInfo on EnrollmentInfo.ENROLLMENT_ID=CourseInfo.COURSE_ID
+Where CourseInfo.COURSE_NAME = 'SQL';
+
+--Query to retrieve the count of enrolled students for each instructors
+
+SELECT COURSE_INSTRUCTOR_NAME, COUNT(*) AS NumberOfStudents
+FROM CourseInfo
+GROUP BY COURSE_INSTRUCTOR_NAME;
+
+--Query to retrieve list of students enrolled in multiple courses
+
+SELECT StudentInfo.STU_NAME, COUNT(EnrollmentInfo.COURSE_ID) AS num_of_courses_enrolled
+FROM StudentInfo
+JOIN EnrollmentInfo ON StudentInfo.STU_ID = EnrollmentInfo.STUDENT_ID
+GROUP BY StudentInfo.STU_ID
+HAVING COUNT(EnrollmentInfo.COURSE_ID) > 1;
+
+--Query to retrieve course that have highest number of enrolled students
+
+SELECT CourseInfo.COURSE_ID, CourseInfo.COURSE_NAME, COUNT(EnrollmentInfo.STUDENT_ID) AS num_of_courses_enrolled
+FROM CourseInfo
+LEFT JOIN EnrollmentInfo ON CourseInfo.COURSE_ID = EnrollmentInfo.COURSE_ID
+GROUP BY CourseInfo.COURSE_ID, CourseInfo.COURSE_NAME
+ORDER BY num_of_courses_enrolled DESC;
