@@ -7,16 +7,16 @@ order by region,product_id;
 
 --roll up product to region level
 
-select region, SUM(sales_amount) as total_sales
+select product_id,region, SUM(sales_amount) as total_sales
 from sales_sample
-Group by region
-order by region;
+Group by product_id,region
+order by product_id,region;
 
 -- Cube
 
 Select product_id,region, date,sum(sales_amount) as total_sales
 from sales_sample
-group by product_id,region,date
+group by Cube(product_id,region,date)
 order by product_id,region,date;
 
 --slice the date to view sales for particular region or date range
